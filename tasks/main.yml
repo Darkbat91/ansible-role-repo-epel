@@ -4,6 +4,16 @@
     path: "{{ epel_repofile_path }}"
   register: epel_repofile_result
 
+
+- name: Ensure Repo is in proper state
+  ini_file:
+    path: "/etc/yum.repos.d/epel.repo"
+    section: epel
+    option: enabled
+    value: 1
+    mode: 0644
+  when: epel_repo_status
+
 - name: Install EPEL repo.
   yum:
     name: "{{ epel_repo_url }}"
